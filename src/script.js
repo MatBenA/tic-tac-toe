@@ -8,6 +8,7 @@ const Gameboard = (function () {
         }
     }
 
+    //Shows gameboard
     const getBoard = () => board;
 
     //Marks a cell in a specified position
@@ -39,16 +40,26 @@ const Game = (function (board) {
     */
     const winningState = () => {
         //win state in rows
-        let winner;
-        board.forEach((row) => {
-            if (row[0] === "X" && row[1] === "X" && row[2] === "X") {
-                winner = "X wins";
+        for (let i = 0; i < board.length; i++) {
+            if (
+                board[i][0] === "X" &&
+                board[i][1] === "X" &&
+                board[i][2] === "X"
+            ) {
+                return "X wins";
             }
-        });
-        
+        }
+
         //Win state in columns
-        
-        return winner;
+        for (let i = 0; i < board.length; i++) {
+            if (
+                board[0][i] === "X" &&
+                board[1][i] === "X" &&
+                board[2][i] === "X"
+            ) {
+                return "X wins";
+            }
+        }
     };
     return { winningState };
 })(Gameboard.getBoard());
