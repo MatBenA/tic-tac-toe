@@ -11,7 +11,7 @@ const Gameboard = (function () {
     const getBoard = () => board;
 
     //Marks a cell in a specified position
-    const markCell = (mark, col, row) => {
+    const markCell = (mark, row, col) => {
         if (board[row][col]) {
             throw new Error("Position already occupied");
         }
@@ -28,8 +28,30 @@ const Gameboard = (function () {
     return { getBoard, markCell, reset };
 })();
 
+const Game = (function (board) {
+    /*  TODO
+        Winning Stat:
+            -In line -In Column -At diagonal
+            draw
+            keep playing
 
-
+            return winner
+    */
+    const winningState = () => {
+        //win state in rows
+        let winner;
+        board.forEach((row) => {
+            if (row[0] === "X" && row[1] === "X" && row[2] === "X") {
+                winner = "X wins";
+            }
+        });
+        
+        //Win state in columns
+        
+        return winner;
+    };
+    return { winningState };
+})(Gameboard.getBoard());
 
 //Create player factory function
 function Player(name, marker) {
