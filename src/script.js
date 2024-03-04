@@ -62,14 +62,25 @@ const Game = (function (board) {
         }
 
         //Win state diagonal
-        if(board[0][0] && board[1][1] && board[2][2]){
+        if (board[0][0] === "X" && board[1][1] === "X" && board[2][2] === "X") {
             return "X wins";
         }
 
         //Win state reverse-diagonal
-        if(board[0][2] && board[1][1] && board[2][0]){
+        if (board[0][2] === "X" && board[1][1] === "X" && board[2][0] === "X") {
             return "X wins";
         }
+
+        //Draw state
+        let isFull = true;
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board.length; j++) {
+                if (board[i][j] === "") {
+                    isFull = false;
+                }
+            }
+        }
+        return isFull && "draw";
     };
     return { winningState };
 })(Gameboard.getBoard());
