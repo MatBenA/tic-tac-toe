@@ -30,45 +30,38 @@ const Gameboard = (function () {
 })();
 
 const Game = (function (board) {
-    /*  TODO
-        Winning Stat:
-            -In line -In Column -At diagonal
-            draw
-            keep playing
-
-            return winner
-    */
-    const winningState = () => {
+    /*  TODO recognize not only Xs but Os too */
+    const winningState = (mark) => {
         //win state in rows
         for (let i = 0; i < board.length; i++) {
             if (
-                board[i][0] === "X" &&
-                board[i][1] === "X" &&
-                board[i][2] === "X"
+                board[i][0] === mark &&
+                board[i][1] === mark &&
+                board[i][2] === mark
             ) {
-                return "X wins";
+                return `${mark} wins`;
             }
         }
 
         //Win state in columns
         for (let i = 0; i < board.length; i++) {
             if (
-                board[0][i] === "X" &&
-                board[1][i] === "X" &&
-                board[2][i] === "X"
+                board[0][i] === mark &&
+                board[1][i] === mark &&
+                board[2][i] === mark
             ) {
-                return "X wins";
+                return `${mark} wins`;
             }
         }
 
         //Win state diagonal
-        if (board[0][0] === "X" && board[1][1] === "X" && board[2][2] === "X") {
-            return "X wins";
+        if (board[0][0] === mark && board[1][1] === mark && board[2][2] === mark) {
+            return `${mark} wins`;
         }
 
         //Win state reverse-diagonal
-        if (board[0][2] === "X" && board[1][1] === "X" && board[2][0] === "X") {
-            return "X wins";
+        if (board[0][2] === mark && board[1][1] === mark && board[2][0] === mark) {
+            return `${mark} wins`;
         }
 
         //Draw state
