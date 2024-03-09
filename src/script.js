@@ -1,4 +1,4 @@
-const Gameboard = (function () {
+const Game = (function () {
     const board = [];
     //creates board
     for (let i = 0; i < 3; i++) {
@@ -13,6 +13,14 @@ const Gameboard = (function () {
 
     //Marks a cell in a specified position
     const markCell = (mark, row, col) => {
+
+        if(row > 2 || row < 0){
+            throw new Error("Out of bounds: row must be an integer number between 0 and 2 inclusive");
+        }
+        if(col > 2 || col < 0){
+            throw new Error("Out of bounds: col must be an integer number between 0 and 2 inclusive");
+        }
+
         if (board[row][col]) {
             throw new Error("Position already occupied");
         }
@@ -26,10 +34,6 @@ const Gameboard = (function () {
         });
     };
 
-    return { getBoard, markCell, reset };
-})();
-
-const Game = (function ({ getBoard, markCell, reset }) {
     //TODO should put mark on gameboard and check winning state
     const playTurn = (mark, playerName, row, col) => {
         markCell(mark, row, col);
@@ -39,7 +43,6 @@ const Game = (function ({ getBoard, markCell, reset }) {
     //checks if given mark has won or the game is in draw state
     const winningState = (mark, playerName) => {
         //this method could be refactored to check for dinamic number of rows and columns
-        const board = getBoard();
         //win state in rows
         for (let i = 0; i < board.length; i++) {
             if (
@@ -95,8 +98,9 @@ const Game = (function ({ getBoard, markCell, reset }) {
         return isFull && "draw";
     };
 
-    return { playTurn };
-})(Gameboard);
+    return { getBoard, playTurn, reset };
+})();
+
 
 //Create player factory function
 function Player(name, marker) {
@@ -107,6 +111,16 @@ function Player(name, marker) {
     return { getName, getMarker, play };
 }
 
-for (cell of document.getElementsByClassName("cell")) {
-    cell.addEventListener("click", (e) => console.log(e));
-}
+//set event listeners for each cell
+document
+    .querySelectorAll(".cell")
+    .forEach((cell) =>
+        cell.addEventListener("click", (e) => console.log(cell))
+    );
+
+const display = (function () {
+    const player1 = Player("", "X");
+    const player2 = Player("", "O");
+
+    return {};
+})();
