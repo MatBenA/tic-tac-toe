@@ -1,0 +1,16 @@
+:root {
+    --cell-size: 100px;
+}
+
+.tictactoe {
+    display: flex;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: 1px solid black;
+    cursor: pointer;
+}

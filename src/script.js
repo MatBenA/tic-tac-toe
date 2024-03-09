@@ -31,26 +31,26 @@ const Gameboard = (function () {
 
 const Game = (function ({ getBoard, markCell, reset }) {
     //TODO should put mark on gameboard and check winning state
-    const playTurn = (mark, row, col) => {
+    const playTurn = (mark, playerName, row, col) => {
         markCell(mark, row, col);
-        return winningState(mark);
+        return winningState(mark, playerName);
     };
 
     //checks if given mark has won or the game is in draw state
-    const winningState = (mark) => {
+    const winningState = (mark, playerName) => {
         //this method could be refactored to check for dinamic number of rows and columns
         const board = getBoard();
         //win state in rows
         for (let i = 0; i < board.length; i++) {
             if (
-                //for future scaling this could be inside 
+                //for future scaling this could be inside
                 //of a for loop that increments the columns or rows
                 //instead of having to do it manually
                 board[i][0] === mark &&
                 board[i][1] === mark &&
                 board[i][2] === mark
             ) {
-                return `${mark} wins`;
+                return `${playerName} wins`;
             }
         }
 
@@ -61,7 +61,7 @@ const Game = (function ({ getBoard, markCell, reset }) {
                 board[1][i] === mark &&
                 board[2][i] === mark
             ) {
-                return `${mark} wins`;
+                return `${playerName} wins`;
             }
         }
 
@@ -71,7 +71,7 @@ const Game = (function ({ getBoard, markCell, reset }) {
             board[1][1] === mark &&
             board[2][2] === mark
         ) {
-            return `${mark} wins`;
+            return `${playerName} wins`;
         }
 
         //Win state reverse-diagonal
@@ -80,7 +80,7 @@ const Game = (function ({ getBoard, markCell, reset }) {
             board[1][1] === mark &&
             board[2][0] === mark
         ) {
-            return `${mark} wins`;
+            return `${playerName} wins`;
         }
 
         //Draw state
@@ -102,6 +102,11 @@ const Game = (function ({ getBoard, markCell, reset }) {
 function Player(name, marker) {
     const getName = () => name;
     const getMarker = () => marker;
+    const play = (row, col) => Game.playTurn(marker, name, row, col);
 
-    return { getName, getMarker };
+    return { getName, getMarker, play };
+}
+
+for (cell of document.getElementsByClassName("cell")) {
+    cell.addEventListener("click", (e) => console.log(e));
 }
